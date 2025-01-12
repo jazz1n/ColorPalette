@@ -178,7 +178,7 @@ def main():
     if uploaded_file is not None:
         image = load_image(uploaded_file)  # (H, W, 3)
         st.subheader("Original Image")
-        st.image(image, use_column_width=True)
+        st.image(image, use_container_width=True)
 
         if st.button("Extract Palette"):
             data = image_to_data(image).astype(float)
@@ -211,14 +211,14 @@ def main():
             palette = np.zeros((50, 50 * n_colors, 3), dtype=int)
             for i, c in enumerate(centroids_rounded):
                 palette[:, i * 50:(i + 1) * 50, :] = c
-            st.image(palette, caption="Color Palette", use_column_width=True)
+            st.image(palette, caption="Color Palette", use_container_width=True)
 
             # Reconstruct the image using the cluster assignments
             reconstructed_data = np.array([centroids_rounded[c] for c in full_clusters])
             reconstructed_image = data_to_image(reconstructed_data, image.shape)
 
             st.subheader("Reconstructed Image")
-            st.image(reconstructed_image.astype(np.uint8), use_column_width=True)
+            st.image(reconstructed_image.astype(np.uint8), use_container_width=True)
 
 if __name__ == "__main__":
     main()
