@@ -1,9 +1,9 @@
-# Color Palette
-This project is implemented in Jupyter Notebook.
+# Color Palette Extractor
 
-How to extract the major contributive colors in a picture?
+Extracting the major contributive colors in a picture by kmeans algorithm.
 
-By kmeans algorithm.
+### You can try the Jupyter Notebook locally or the Streamlit app [here](https://color-palette-extraction.streamlit.app/).
+
 
 ## How it looks like:
 #### Veggies box:
