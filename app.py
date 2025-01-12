@@ -1,5 +1,3 @@
-# streamlit_app.py
-
 import streamlit as st
 import numpy as np
 from PIL import Image
@@ -38,11 +36,11 @@ def sample_data(data: np.ndarray, sample_size: int = 10000) -> np.ndarray:
     return data
 
 # -------------------------------------------------------
-# 2. K-MEANS++ INITIALIZATION
+# 2. K-MEANS INITIALIZATION
 # -------------------------------------------------------
-def initialize_centroids_kmeans_pp(data: np.ndarray, k: int, random_state: int = 42) -> np.ndarray:
+def initialize_centroids_kmeans(data: np.ndarray, k: int, random_state: int = 42) -> np.ndarray:
     """
-    K-Means++ centroid initialization.
+    K-Means centroid initialization.
     Chooses the first centroid randomly, then chooses subsequent
     centroids with probability proportional to the squared distance from existing centroids.
     """
@@ -102,7 +100,7 @@ def kmeans_from_scratch(
     k: int,
     max_iter: int = 100,
     epsilon: float = 1e-2,
-    use_kmeans_pp: bool = True,
+    use_kmeans: bool = True,
     random_state: int = 42
 ) -> tuple[np.ndarray, np.ndarray]:
     """
@@ -118,8 +116,8 @@ def kmeans_from_scratch(
         Maximum number of iterations.
     epsilon : float
         Threshold for centroid movement to decide convergence.
-    use_kmeans_pp : bool
-        If True, use K-Means++ initialization. Otherwise, random initialization.
+    use_kmeans : bool
+        If True, use K-Means initialization. Otherwise, random initialization.
     random_state : int
         Random seed for reproducibility.
 
@@ -131,8 +129,8 @@ def kmeans_from_scratch(
         Cluster assignment for each data point.
     """
     # 1. Initialize centroids
-    if use_kmeans_pp:
-        centroids = initialize_centroids_kmeans_pp(data, k, random_state)
+    if use_kmeans:
+        centroids = initialize_centroids_kmeans(data, k, random_state)
     else:
         np.random.seed(random_state)
         random_idx = np.random.choice(len(data), size=k, replace=False)
@@ -155,10 +153,10 @@ def kmeans_from_scratch(
 # 4. STREAMLIT APP
 # -------------------------------------------------------
 def main():
-    st.title("Improved K-Means Color Extraction (No sklearn)")
+    st.title("K-Means Color Paletter Extraction from Scratch! ")
     st.write(
         "Upload an image, choose the number of colors, sampling, and other parameters. "
-        "We'll cluster the pixel colors with a custom K-Means++ implementation."
+        "We'll cluster the pixel colors with a custom K-Means implementation."
     )
 
     # Sidebar: K-Means parameters
@@ -195,7 +193,7 @@ def main():
                 k=n_colors,
                 max_iter=max_iter,
                 epsilon=epsilon,
-                use_kmeans_pp=True,  # always use K-Means++ here
+                use_kmeans=True,
                 random_state=42
             )
 
